@@ -1,0 +1,17 @@
+package xxx.gamedev.image;
+
+import java.awt.DisplayMode;
+import java.io.File;
+
+import javax.swing.JFrame;
+
+public class ImageTest extends JFrame
+{
+public static void main(String[] args)
+{
+	DisplayMode displaymode =  new DisplayMode(800, 600, 16,
+            DisplayMode.REFRESH_RATE_UNKNOWN);
+	
+	
+}
+}

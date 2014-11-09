@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Extract local variable &apos;graphics&apos; from expression &apos;screen.getGraphics()&apos;&#x0A;- Original project: &apos;gameTest&apos;&#x0A;- Variable name: &apos;graphics&apos;&#x0A;- Destination method: &apos;xxx.gamedev.engine.behaviour.SpriteTest1.animationLoop()&apos;&#x0A;- Variable expression: &apos;screen.getGraphics()&apos;&#x0A;- Replace occurrences of expression with variable" description="Extract local variable &apos;graphics&apos;" final="false" id="org.eclipse.jdt.ui.extract.temp" input="/src&lt;xxx.gamedev.engine.behaviour{SpriteTest1.java" name="graphics" replace="true" selection="1408 21" stamp="1415481093666" version="1.0"/>
+</session>

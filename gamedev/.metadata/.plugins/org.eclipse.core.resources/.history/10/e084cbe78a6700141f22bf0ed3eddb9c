@@ -1,0 +1,67 @@
+package xxx.gamedev.engine.behaviour;
+
+import java.awt.DisplayMode;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+
+import xxx.gamedev.engine.animation.Animation;
+import xxx.gamedev.screens.ScreenManager;
+
+public class SpriteTest1
+{
+	private static final long DEMO_TIME = 10000;
+    private ScreenManager screen;
+    private Image bgImage;
+    private Sprite sprite;
+	public static void main(String[] args)
+	{	
+		SpriteTest1 test = new SpriteTest1();
+		test.run();
+	}
+	private static final DisplayMode POSSIBLE_MODES[] = {
+		new DisplayMode(1080, 780, 32, 0),
+        new DisplayMode(800, 600, 32, 0),
+        new DisplayMode(800, 600, 24, 0),
+        new DisplayMode(800, 600, 16, 0),
+        new DisplayMode(640, 480, 32, 0),
+        new DisplayMode(640, 480, 24, 0),
+        new DisplayMode(640, 480, 16, 0)
+    };
+	private void run()
+	{
+		DisplayMode displayMode = screen.findFirstCompatibleMode(POSSIBLE_MODES);
+		screen.setFullScreen(displayMode);
+		loadImages();
+		animationLoop();
+		
+	}
+	private void animationLoop()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	private void loadImages()
+	{
+		bgImage = getImage("resources/backgroung.jpg");
+		Image player1 = getImage("resources/player1.jpg");
+		Image player2 = getImage("resources/player2.jpg");
+		Image player3 = getImage("resources/player3.jpg");
+		Animation anim = new Animation();
+        anim.addFrame(player1, 250);
+        anim.addFrame(player2, 150);
+        anim.addFrame(player1, 150);
+        anim.addFrame(player2, 150);
+        anim.addFrame(player3, 200);
+        anim.addFrame(player2, 150);
+        sprite = new Sprite(anim);
+        // setting up the velocity
+        sprite.setVelocityX(0.2f);
+        sprite.setVelocityY(0.2f);        
+	}
+	private Image getImage(String imageUrl)
+	{
+		return new ImageIcon(imageUrl).getImage();
+	}
+
+}

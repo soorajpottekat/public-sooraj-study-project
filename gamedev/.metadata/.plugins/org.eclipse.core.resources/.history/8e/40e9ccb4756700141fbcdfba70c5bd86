@@ -1,0 +1,28 @@
+package xxx.gamedev.engine.animation;
+
+import java.util.ArrayList;
+
+public class Animation
+{
+	private ArrayList frames;
+	private long totalTime;
+	private int currentIndex;
+	private int animTime;
+	
+	public Animation()
+	{
+		frames =  new ArrayList();
+		totalTime = 0;
+		start();
+		
+	}
+
+	private void start()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+
+}

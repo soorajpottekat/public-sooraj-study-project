@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;xxx.gamedev.screens.ScreenManager&apos; to &apos;SimpleScreenManager&apos;&#x0A;- Original project: &apos;game&apos;&#x0A;- Original element: &apos;xxx.gamedev.screens.ScreenManager&apos;&#x0A;- Renamed element: &apos;xxx.gamedev.screens.SimpleScreenManager&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;ScreenManager&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;xxx.gamedev.screens{ScreenManager.java[ScreenManager" matchStrategy="1" name="SimpleScreenManager" qualified="false" references="true" similarDeclarations="false" stamp="1415477699692" textual="false" version="1.0"/>
+</session>

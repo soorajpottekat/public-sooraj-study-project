@@ -1,0 +1,6 @@
+1415524784859	Extract local variable 'displaymode'
+1415529865651	Extract local variable 'graphics'
+1415545827623	Extract local variable 'window'
+1415545974097	Extract local variable 'keyCode'
+1415546137105	Extract local variable 'keyCode'
+1415546514014	Extract local variable 'window'

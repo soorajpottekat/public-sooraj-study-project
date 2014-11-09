@@ -1,0 +1,34 @@
+package xxx.gamedev.engine.behaviour;
+
+import java.awt.DisplayMode;
+import java.awt.Image;
+
+import xxx.gamedev.screens.ScreenManager;
+
+public class SpriteTest1
+{
+	private static final long DEMO_TIME = 10000;
+    private ScreenManager screen;
+    private Image bgImage;
+    private Sprite sprite;
+	public static void main(String[] args)
+	{	
+		SpriteTest1 test = new SpriteTest1();
+		test.run();
+	}
+	private static final DisplayMode POSSIBLE_MODES[] = {
+		new DisplayMode(1080, 780, 32, 0),
+        new DisplayMode(800, 600, 32, 0),
+        new DisplayMode(800, 600, 24, 0),
+        new DisplayMode(800, 600, 16, 0),
+        new DisplayMode(640, 480, 32, 0),
+        new DisplayMode(640, 480, 24, 0),
+        new DisplayMode(640, 480, 16, 0)
+    };
+	private void run()
+	{
+		
+		
+	}
+
+}

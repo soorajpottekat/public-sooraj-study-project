@@ -1,0 +1,65 @@
+package xxx.gamedev.engine.behaviour;
+
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+
+import javax.swing.ImageIcon;
+
+import xxx.gamedev.engine.animation.Animation;
+import xxx.gamedev.screens.ScreenManager;
+public class SpriteTest2 {
+	private static final long DEMO_TIME = 10000;
+    private static final long FADE_TIME = 1000;
+    private static final int NUM_SPRITES = 3;
+    private ScreenManager screen;
+    private Image bgImage;
+    private Sprite sprites[];
+    public static void main(String args[]) {
+        SpriteTest2 test = new SpriteTest2();
+        test.run();
+    }
+    private void run()
+	{
+		screen = new ScreenManager();
+		DisplayMode displayMode = screen.findFirstCompatibleMode(POSSIBLE_MODES);
+		screen.setFullScreen(displayMode);
+		try
+		{
+			loadImagesAndSetAnimation();
+			animationLoop();
+		}
+		catch (Exception e)
+		{
+			// TODO: handle exception
+		}
+		finally
+		{
+			screen.restoreScreen();
+		}
+		
+		
+	}
+	private void animationLoop()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	private void loadImagesAndSetAnimation()
+	{
+		bgImage = getImage("resources/background.jpg");
+		
+	}
+	private Image getImage(String imageURL)
+	{
+		new ImageIcon(imageURL).getImage();
+	}
+	private static final DisplayMode POSSIBLE_MODES[] = {
+        new DisplayMode(800, 600, 32, 0),
+        new DisplayMode(800, 600, 24, 0),
+        new DisplayMode(800, 600, 16, 0),
+        new DisplayMode(640, 480, 32, 0),
+        new DisplayMode(640, 480, 24, 0),
+        new DisplayMode(640, 480, 16, 0)
+    };
+    
+}

@@ -1,0 +1,19 @@
+package xxx.gamedev.engine.animation;
+
+import java.awt.DisplayMode;
+
+public class AnimationTest
+{
+	public static void main(String[] args)
+	{
+		DisplayMode displayMode = new DisplayMode(800, 600, 16, DisplayMode.REFRESH_RATE_UNKNOWN);
+		AnimationTest test = new AnimationTest();
+		test.run(displayMode);
+	}
+
+	private void run(DisplayMode displayMode)
+	{
+		
+		
+	}
+}

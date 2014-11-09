@@ -1,0 +1,179 @@
+package xxx.gamedev.engine.behaviour;
+
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+
+import javax.swing.ImageIcon;
+import javax.swing.plaf.SliderUI;
+
+import xxx.gamedev.engine.animation.Animation;
+import xxx.gamedev.screens.ScreenManager;
+public class SpriteTest2 {
+	private static final long DEMO_TIME = 10000;
+    private static final long FADE_TIME = 1000;
+    private static final int NUM_SPRITES = 3;
+    private static final int HORIZ_ORIENTATION = 0;
+    private static final int VERT_ORIENTATION = 0;
+    private ScreenManager screen;
+    private Image bgImage;
+    private Sprite sprites[];
+    public static void main(String args[]) {
+        SpriteTest2 test = new SpriteTest2();
+        test.run();
+    }
+    private void run()
+	{
+		screen = new ScreenManager();
+		DisplayMode displayMode = screen.findFirstCompatibleMode(POSSIBLE_MODES);
+		screen.setFullScreen(displayMode);
+		try
+		{
+			loadImagesAndSetAnimation();
+			animationLoop();
+		}
+		catch (Exception e)
+		{
+			// TODO: handle exception
+		}
+		finally
+		{
+			screen.restoreScreen();
+		}
+		
+		
+	}
+	private void animationLoop()
+	{
+		long startTime = System.currentTimeMillis();
+		long currentTime =  startTime;
+		while (currentTime - startTime < DEMO_TIME)
+		{
+			long elapsedTime = System.currentTimeMillis() - currentTime;
+			currentTime +=elapsedTime;
+			
+			update(elapsedTime);
+			
+			Graphics2D graphics = screen.getGraphics();
+			draw(graphics);
+			drawFade(graphics,currentTime - startTime,);
+			graphics.dispose();
+			screen.update();
+			try
+			{
+				Thread.sleep(20);
+			}
+			catch (InterruptedException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	private void drawFade(Graphics2D graphics, long currTime)
+	{
+		long time = 0;
+		if(currTime<=FADE_TIME)
+		{
+			time = FADE_TIME - currTime;
+		}
+		else if(currTime > DEMO_TIME - FADE_TIME)
+		{
+			time = FADE_TIME - DEMO_TIME + currTime;
+		}
+		else
+		{
+			return;
+		}
+		byte numberOfBars = 8;
+		int barHeight = screen.getHeight() / numberOfBars;
+		int blackHeight = (int) (time * barHeight / FADE_TIME);
+		graphics.setColor(Color.BLACK);
+		for (int i = 0; i < numberOfBars; i++)
+		{
+			int y = i * barHeight + (barHeight - blackHeight) / 2;
+			graphics.fillRect(0, y, screen.getWidth(), blackHeight);
+			
+		}
+	}
+	private void draw(Graphics2D graphics)
+	{
+		graphics.drawImage(bgImage,0,0,null);
+		AffineTransform af = new AffineTransform();
+		for (int i = 0; i < sprites.length; i++)
+		{
+			Sprite s = sprites[i];
+			af.setToTranslation(s.getX(), s.getY());
+			if(s.getVelocityX() < 0)
+			{
+				af.scale(-1, 1);
+				af.translate(-s.getWidth(), 0);
+			}
+			graphics.drawImage(s.getImage(),af,null);
+		}
+	}
+	private void update(long elapsedTime)
+	{
+		for (int i = 0; i < NUM_SPRITES; i++)
+		{
+			Sprite s = sprites[i];
+			
+			if(s.getX() < 0)
+			{
+				s.setVelocityX(Math.abs(s.getVelocityX()));				
+			}
+			else if(s.getX() + s.getWidth() >screen.getWidth() )
+			{
+				s.setVelocityX(-Math.abs(s.getVelocityX()));	
+			}
+			
+			if(s.getY() < 0)
+			{
+				s.setVelocityY(Math.abs(s.getVelocityY()));				
+			}
+			else if(s.getY() + s.getHeight() > screen.getHeight() )
+			{
+				s.setVelocityY(-Math.abs(s.getVelocityY()));	
+			}
+			s.update(elapsedTime);
+		}
+	}
+	private void loadImagesAndSetAnimation()
+	{
+		bgImage = getImage("resources/background.jpg");
+		Image player1 = getImage("resources/player1.png");
+		Image player2 = getImage("resources/player2.png");
+		Image player3 = getImage("resources/player3.png");
+		sprites =  new Sprite[NUM_SPRITES];
+		for (int i = 0; i < NUM_SPRITES; i++)
+		{
+			Animation anim = new Animation();
+			anim.addFrame(player1, 250);
+            anim.addFrame(player2, 150);
+            anim.addFrame(player1, 150);
+            anim.addFrame(player2, 150);
+            anim.addFrame(player3, 200);
+            anim.addFrame(player2, 150);
+            sprites[i] = new Sprite(anim); 	
+			
+            sprites[i].setX((float) Math.random() * (screen.getWidth() - sprites[i].getWidth()));
+            sprites[i].setY((float) Math.random() * (screen.getHeight() - sprites[i].getHeight()));
+            
+            sprites[i].setVelocityX((float)Math.random() - 0.5f);
+            sprites[i].setVelocityY((float)Math.random() - 0.5f);
+			
+		}
+	}
+	private Image getImage(String imageURL)
+	{
+		return new ImageIcon(imageURL).getImage();
+	}
+	private static final DisplayMode POSSIBLE_MODES[] = {
+        new DisplayMode(800, 600, 32, 0),
+        new DisplayMode(800, 600, 24, 0),
+        new DisplayMode(800, 600, 16, 0),
+        new DisplayMode(640, 480, 32, 0),
+        new DisplayMode(640, 480, 24, 0),
+        new DisplayMode(640, 480, 16, 0)
+    };
+    
+}

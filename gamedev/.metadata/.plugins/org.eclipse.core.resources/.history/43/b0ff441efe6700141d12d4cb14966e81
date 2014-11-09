@@ -1,0 +1,93 @@
+package xxx.gamedev.engine.behaviour;
+
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+
+import javax.swing.ImageIcon;
+import javax.swing.plaf.SliderUI;
+
+import xxx.gamedev.engine.animation.Animation;
+import xxx.gamedev.screens.ScreenManager;
+public class SpriteTest2 {
+	private static final long DEMO_TIME = 10000;
+    private static final long FADE_TIME = 1000;
+    private static final int NUM_SPRITES = 3;
+    private ScreenManager screen;
+    private Image bgImage;
+    private Sprite sprites[];
+    public static void main(String args[]) {
+        SpriteTest2 test = new SpriteTest2();
+        test.run();
+    }
+    private void run()
+	{
+		screen = new ScreenManager();
+		DisplayMode displayMode = screen.findFirstCompatibleMode(POSSIBLE_MODES);
+		screen.setFullScreen(displayMode);
+		try
+		{
+			loadImagesAndSetAnimation();
+			animationLoop();
+		}
+		catch (Exception e)
+		{
+			// TODO: handle exception
+		}
+		finally
+		{
+			screen.restoreScreen();
+		}
+		
+		
+	}
+	private void animationLoop()
+	{
+		long startTime = System.currentTimeMillis()
+		long currentTime =  startTime;
+		while (currentTime - startTime < DEMO_TIME)
+		{
+			long elapsedTime = System.currentTimeMillis() - startTime;
+			currentTime +=elapsedTime;
+			
+		}
+	}
+	private void loadImagesAndSetAnimation()
+	{
+		bgImage = getImage("resources/background.jpg");
+		Image player1 = getImage("resources/player1.png");
+		Image player2 = getImage("resources/player2.png");
+		Image player3 = getImage("resources/player3.png");
+		sprites =  new Sprite[NUM_SPRITES];
+		for (int i = 0; i < NUM_SPRITES; i++)
+		{
+			Animation anim = new Animation();
+			anim.addFrame(player1, 250);
+            anim.addFrame(player2, 150);
+            anim.addFrame(player1, 150);
+            anim.addFrame(player2, 150);
+            anim.addFrame(player3, 200);
+            anim.addFrame(player2, 150);
+            sprites[i] = new Sprite(anim); 	
+			
+            sprites[i].setX((float) Math.random() * (screen.getWidth() - sprites[i].getWidth()));
+            sprites[i].setY((float) Math.random() * (screen.getHeight() - sprites[i].getHeight()));
+            
+            sprites[i].setVelocityX((float)Math.random() - 0.5f);
+            sprites[i].setVelocityY((float)Math.random() - 0.5f);
+			
+		}
+	}
+	private Image getImage(String imageURL)
+	{
+		return new ImageIcon(imageURL).getImage();
+	}
+	private static final DisplayMode POSSIBLE_MODES[] = {
+        new DisplayMode(800, 600, 32, 0),
+        new DisplayMode(800, 600, 24, 0),
+        new DisplayMode(800, 600, 16, 0),
+        new DisplayMode(640, 480, 32, 0),
+        new DisplayMode(640, 480, 24, 0),
+        new DisplayMode(640, 480, 16, 0)
+    };
+    
+}

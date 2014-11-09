@@ -1,0 +1,51 @@
+package xxx.gamedev.engine.animation;
+
+import java.awt.Image;
+import java.util.ArrayList;
+
+public class Animation
+{
+	private ArrayList<AnimationFrame> frames;
+	private long totalTime;
+	private int currentIndex;
+	private int animTime;
+	
+	public Animation()
+	{
+		frames =  new ArrayList<AnimationFrame>();
+		totalTime = 0;
+		start();
+		
+	}
+	/**
+	 * Adds an image to animation frame along with duration
+	 * @param img - image of the animation
+	 * @param duration - duration of the animation
+	 */
+	public synchronized void addFrame(Image img, long duration)
+	{
+		totalTime = totalTime + duration;
+		frames.add(new AnimationFrame(img,totalTime));
+	}
+	
+
+	private void start()
+	{
+		animTime = 0;
+		currentIndex = 0;
+		
+	}
+	
+	private class AnimationFrame
+	{
+		Image img;
+		long endTime;
+		AnimationFrame(Image img, long endTime)
+		{
+			this.img = img;
+			this.endTime = endTime;			
+		}
+	}
+	
+
+}

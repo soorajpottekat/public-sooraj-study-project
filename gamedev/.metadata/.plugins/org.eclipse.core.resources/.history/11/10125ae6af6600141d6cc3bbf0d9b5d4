@@ -1,0 +1,36 @@
+package xxx.gamedev.image;
+
+import java.awt.DisplayMode;
+import java.awt.Image;
+import java.io.File;
+
+import javax.swing.JFrame;
+
+import xxx.gamedev.screens.ScreenManager;
+
+public class ImageTest extends JFrame
+{
+	private static final int FONT_SIZE = 24;
+    private static final long DEMO_TIME = 10000;
+    private ScreenManager screen;
+    private Image bgImage;
+    private Image opaqueImage;
+    private Image transparentImage;
+    private Image translucentImage;
+    private Image antiAliasedImage;
+    private boolean imagesLoaded;
+	public static void main(String[] args)
+	{
+		DisplayMode displaymode = new DisplayMode(800, 600, 16,
+				DisplayMode.REFRESH_RATE_UNKNOWN);
+		ImageTest it = new ImageTest();
+		it.run(displaymode);
+
+	}
+
+	private void run(DisplayMode displaymode)
+	{
+		
+	}
+
+}

@@ -1,0 +1,54 @@
+package xxx.gamedev.engine.animation;
+
+import java.awt.DisplayMode;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+
+import xxx.gamedev.screens.ScreenManager;
+
+public class AnimationTest
+{
+	private static final long DEMO_TIME = 5000;
+    private ScreenManager screen;
+    private Image bgImage;
+    private Animation anim;
+	public static void main(String[] args)
+	{
+		DisplayMode displayMode = new DisplayMode(800, 600, 16, DisplayMode.REFRESH_RATE_UNKNOWN);
+		AnimationTest test = new AnimationTest();
+		test.run(displayMode);
+	}
+
+	private void run(DisplayMode displayMode)
+	{
+		screen = new ScreenManager();
+		try
+		{
+			screen.setFullScreen(displayMode, new JFrame());
+			
+		}
+		catch(Exception ex)
+		{
+			loadImages();
+			animationLoop();
+		}
+		finally
+		{
+			screen.restoreScreen();
+		}
+		
+	}
+
+	private void loadImages()
+	{
+		bgImage = getImage("resources/background.jpg");
+		
+	}
+
+	private Image getImage(String imgURL)
+	{
+		return new ImageIcon(imgURL).getImage();
+	}
+}

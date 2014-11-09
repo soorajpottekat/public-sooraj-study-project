@@ -1,0 +1,99 @@
+package xxx.gamedev.engine.animation;
+
+import java.awt.DisplayMode;
+import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+
+import xxx.gamedev.screens.ScreenManager;
+
+public class AnimationTest
+{
+	private static final long DEMO_TIME = 5000;
+    private ScreenManager screen;
+    private Image bgImage;
+    private Animation anim;
+	public static void main(String[] args)
+	{
+		DisplayMode displayMode = new DisplayMode(800, 600, 16, DisplayMode.REFRESH_RATE_UNKNOWN);
+		AnimationTest test = new AnimationTest();
+		test.run(displayMode);
+	}
+
+	private void run(DisplayMode displayMode)
+	{
+		screen = new ScreenManager();
+		try
+		{
+			screen.setFullScreen(displayMode);
+			loadImages();
+			animationLoop();
+			
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		finally
+		{
+			screen.restoreScreen();
+		}
+		
+	}
+
+	private void animationLoop()
+	{
+		long startTime =  System.currentTimeMillis();
+		long currentTime = startTime;
+		while (currentTime - startTime < DEMO_TIME)
+		{
+			long elapsedTime = System.currentTimeMillis() - currentTime;
+			currentTime +=elapsedTime;
+			anim.update(elapsedTime);
+			Graphics g = screen.getFullScreenWindow().getGraphics();
+			draw(g);
+			g.dispose();
+			try
+			{
+				Thread.sleep(20);
+			}
+			catch (InterruptedException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+	}
+
+	private void draw(Graphics g)
+	{
+		g.drawImage(bgImage,0,0,null);
+		g.drawImage(anim.getImage(),0,0,null);
+		
+	}
+
+	private void loadImages()
+	{
+		bgImage = getImage("resources/background.jpg");
+		Image player1 = getImage("resources/player1.png");
+		Image player2 = getImage("resources/player2.png");
+		Image player3 = getImage("resources/player3.png");
+		// create animation
+        anim = new Animation();
+        anim.addFrame(player1, 250);
+        anim.addFrame(player2, 150);
+        anim.addFrame(player1, 150);
+        anim.addFrame(player2, 150);
+        anim.addFrame(player3, 200);
+        anim.addFrame(player2, 150);
+	}
+
+	private Image getImage(String imgURL)
+	{
+		return new ImageIcon(imgURL).getImage();
+	}
+}

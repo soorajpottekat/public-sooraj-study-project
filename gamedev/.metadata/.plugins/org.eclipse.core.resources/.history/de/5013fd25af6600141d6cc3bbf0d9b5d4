@@ -1,0 +1,14 @@
+package xxx.gamedev.image;
+
+import java.io.File;
+
+public class ImageTest
+{
+public static void main(String[] args)
+{
+	File f =  new File("resources/a");
+	System.out.println("[Sooraj] ---- xxx.gamedev.image : main ---- [Sooraj]");
+	System.out.println("[Sooraj] ---- absoulte path = "+f.getAbsolutePath()+"---- [Sooraj]");
+	
+}
+}

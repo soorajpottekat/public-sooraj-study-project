@@ -1,0 +1,112 @@
+package xxx.gamedev.image;
+
+import java.awt.Color;
+import java.awt.DisplayMode;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.io.File;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+
+import xxx.gamedev.screens.ScreenManager;
+
+public class ImageTest extends JFrame
+{
+	private static final int FONT_SIZE = 24;
+    private static final long DEMO_TIME = 10000;
+    private ScreenManager screen;
+    private Image bgImage;
+    private Image opaqueImage;
+    private Image transparentImage;
+    private Image translucentImage;
+    private Image antiAliasedImage;
+    private boolean imagesLoaded;
+	public static void main(String[] args)
+	{
+		DisplayMode displaymode = new DisplayMode(800, 600, 16,
+				DisplayMode.REFRESH_RATE_UNKNOWN);
+		ImageTest it = new ImageTest();
+		it.run(displaymode);
+
+	}
+
+	private void run(DisplayMode displaymode)
+	{
+		setBackground(Color.BLUE);
+		setForeground(Color.WHITE);
+		setFont(new Font("Dialog", Font.PLAIN, FONT_SIZE));
+		imagesLoaded = false;
+		screen = new ScreenManager();
+		try
+		{
+			//TO DO 
+			screen.setFullScreen(displaymode);
+			loadImages();
+			Thread.sleep(DEMO_TIME);
+		}
+		catch (Exception e)
+		{
+			// TODO: handle exception
+		}
+		finally
+		{
+			screen.restoreScreen();
+		}
+	}
+		
+	
+
+	private void loadImages()
+	{
+		bgImage = loadImage("resources/background.jpg");
+		opaqueImage = loadImage("resources/opaque.png");
+		transparentImage = loadImage("resources/transparent.png");
+		translucentImage = loadImage("resources/translucent.png");
+		antiAliasedImage = loadImage("resources/antialiased.png");
+		imagesLoaded = true;
+		repaint();
+
+	}
+
+	private Image loadImage(String imageName)
+	{
+		return new ImageIcon(imageName).getImage();
+	}
+	
+	@Override
+	public void paint(Graphics graphics)
+	{
+		if(graphics instanceof Graphics2D)
+		{
+			Graphics2D g2 = (Graphics2D)graphics;
+            g2.setRenderingHint(
+                RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		}
+		// draw images
+        if (imagesLoaded) {
+        	graphics.drawImage(bgImage, 0, 0, null);
+            drawImage(graphics, opaqueImage, 0, 0, "Opaque");
+            drawImage(graphics, transparentImage, 320, 0, "Transparent");
+            drawImage(graphics, translucentImage, 0, 300, "Translucent");
+            drawImage(graphics, antiAliasedImage, 320, 300,
+                "Translucent (Anti-Aliased)");
+        }	
+        else {
+        	graphics.drawString("Loading Images...", 5, FONT_SIZE);
+        }
+	}
+
+	private void drawImage(Graphics graphics, Image image, int x, int y,
+			String caption)
+	{
+		graphics.drawImage(image, x, y, null);
+		graphics.drawString(caption, x + 5, y + FONT_SIZE +
+            image.getHeight(null));
+	}
+
+}
